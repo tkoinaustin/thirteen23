@@ -32,8 +32,8 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
         super.init(frame: frame)
         radialMenuSetup()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         radialMenuSetup()
     }

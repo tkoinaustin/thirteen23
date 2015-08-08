@@ -72,7 +72,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, RadialMenuD
         }
         incomingView.alpha = 1.0
         self.view.bringSubviewToFront(incomingView)
-        UIView.animateWithDuration(0.5, delay:0.0, options:[], animations: {
+        UIView.animateWithDuration(0.5, delay:0.0, options:nil, animations: {
             incomingView.center = self.view!.center
             outgoingView.center = outgoingViewCenter
             }, completion:{ _ in
