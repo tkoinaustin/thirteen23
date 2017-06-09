@@ -9,7 +9,7 @@
 import UIKit
 
 protocol RadialMenuDelegate : class {
-    func onSelected(menuItem: RadialButton)
+    func onSelected(_ menuItem: RadialButton)
 }
 
 class RadialMenuView: UIView, UIGestureRecognizerDelegate {
@@ -32,23 +32,22 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
         super.init(frame: frame)
         radialMenuSetup()
     }
-
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        radialMenuSetup()
-    }
-    
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
     // MARK: - Configure Menu View
     
     func radialMenuSetup() {
         MenuItemHasBeenSelected = false
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
         radialIconTouch = makeRadialIcon(RadialButton.touch)
         self.addSubview(radialIconTouch)
     }
     
     
-    func setButtons(radialButtons:[RadialButton], quadrant:Quadrant) {
+    func setButtons(_ radialButtons:[RadialButton], quadrant:Quadrant) {
         for btn:RadialButton in radialButtons {
             print("Button name is \(btn)")
         }
@@ -62,22 +61,22 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
         self.addSubview(radialIconTwo)
         if haveAThirdButton { self.addSubview(radialIconThree) }
 
-        UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions(), animations: {
             self.radialIconTouch.alpha = 1
             }, completion: nil)
        
-        UIView.animateWithDuration(0.9, delay: 0.1, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.7, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.9, delay: 0.1, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.7, options: UIViewAnimationOptions(), animations: {
             self.radialIconOne.center = self.findIconCenterPoint(0,quadrant:quadrant)
             self.radialIconOne.alpha = self.transparency
             }, completion: nil)
         
-        UIView.animateWithDuration(0.7, delay: 0.3, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.7, delay: 0.3, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: {
             self.radialIconTwo.center = self.findIconCenterPoint(1,quadrant:quadrant)
             self.radialIconTwo.alpha = self.transparency
             }, completion: nil)
         
         if haveAThirdButton {
-            UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.3, options: UIViewAnimationOptions(), animations: {
                 self.radialIconThree.center = self.findIconCenterPoint(2,quadrant:quadrant)
                 self.radialIconThree.alpha = self.transparency
                 }, completion: nil)
@@ -87,26 +86,26 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
     // Because there are a limited number of icons I just populated an array.
     // A more elegant solution would have been using geometry to set locations
     // based on the number of icons and screen location, but overkill in this case
-    func findIconCenterPoint(iconNumber:Int, quadrant:Quadrant) -> CGPoint {
+    func findIconCenterPoint(_ iconNumber:Int, quadrant:Quadrant) -> CGPoint {
         var points:[CGPoint]?
         switch (quadrant) {
-        case .TopLeft:
-            points = [CGPointMake(350,200),CGPointMake(308,308),CGPointMake(200,350)]
-        case .TopRight:
-            points = [CGPointMake(50,200),CGPointMake(92,308),CGPointMake(200,350)]
-        case .Left:
-            points = [CGPointMake(308,92),CGPointMake(350,200),CGPointMake(308,308)]
-        case .Right:
-            points = [CGPointMake(92,92),CGPointMake(50,200),CGPointMake(92,308)]
-        case .BottomLeft:
-            points = [CGPointMake(200,50),CGPointMake(308,92),CGPointMake(350,200)]
-        case .BottomRight:
-            points = [CGPointMake(200,50),CGPointMake(92,92),CGPointMake(50,200)]
+        case .topLeft:
+            points = [CGPoint(x: 350,y: 200),CGPoint(x: 308,y: 308),CGPoint(x: 200,y: 350)]
+        case .topRight:
+            points = [CGPoint(x: 50,y: 200),CGPoint(x: 92,y: 308),CGPoint(x: 200,y: 350)]
+        case .left:
+            points = [CGPoint(x: 308,y: 92),CGPoint(x: 350,y: 200),CGPoint(x: 308,y: 308)]
+        case .right:
+            points = [CGPoint(x: 92,y: 92),CGPoint(x: 50,y: 200),CGPoint(x: 92,y: 308)]
+        case .bottomLeft:
+            points = [CGPoint(x: 200,y: 50),CGPoint(x: 308,y: 92),CGPoint(x: 350,y: 200)]
+        case .bottomRight:
+            points = [CGPoint(x: 200,y: 50),CGPoint(x: 92,y: 92),CGPoint(x: 50,y: 200)]
         }
         return points![iconNumber]
     }
     
-    func setupDelegate( myDelegate:RadialMenuDelegate)
+    func setupDelegate( _ myDelegate:RadialMenuDelegate)
     {
         delegate = myDelegate
     }
@@ -114,23 +113,23 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
     // MARK: - Animation
     
     // We are done, gracefully remove the radial menu from the superview and optionally call the delegate for action
-    func animateOut(actionToTake:RadialButton?) {
+    func animateOut(_ actionToTake:RadialButton?) {
         // prevent the view controller from early dismissal if performing the HitTest animation
         if MenuItemHasBeenSelected && actionToTake == nil { return }
-        UIView.animateWithDuration(0.5,  delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.5,  delay: 0.0, options: UIViewAnimationOptions(), animations: {
             self.radialIconOne.alpha = 0
            }, completion: nil)
         
-        UIView.animateWithDuration(0.4,  delay: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.4,  delay: 0.1, options: UIViewAnimationOptions(), animations: {
             self.radialIconTwo.alpha = 0
-            self.radialIconTouch.backgroundColor = UIColor.grayColor()
+            self.radialIconTouch.backgroundColor = UIColor.gray
             }, completion: nil)
         
-        UIView.animateWithDuration(0.3,  delay: 0.2, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.3,  delay: 0.2, options: UIViewAnimationOptions(), animations: {
             self.radialIconThree.alpha = 0
             }, completion: nil)
         
-        UIView.animateWithDuration(0.3,  delay: 0.3, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.3,  delay: 0.3, options: UIViewAnimationOptions(), animations: {
             self.radialIconTouch.alpha = 0
             }, completion: {
                 _ in self.removeFromSuperview()
@@ -140,8 +139,9 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
         })
     }
 
-    func newCoordinates(var point:CGPoint)
+    func newCoordinates(_ point:CGPoint)
     {
+        var point = point
         // translate the location from parent into radial menu coordinates
         point.x += self.frame.width / 2.0
         point.y += self.frame.height / 2.0
@@ -153,30 +153,29 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    func buttonHitTest(button:UIView, point:CGPoint, actionToTake:RadialButton) {
-        if CGRectContainsPoint(button.frame, point) {
+    func buttonHitTest(_ button:UIView, point:CGPoint, actionToTake:RadialButton) {
+        if button.frame.contains(point) {
             MenuItemHasBeenSelected = true
-            button.backgroundColor = UIColor.greenColor()
-            UIView.animateWithDuration(0.5, animations: {
-                button.transform = CGAffineTransformMakeScale(1.4, 1.4)
+            button.backgroundColor = UIColor.green
+            UIView.animate(withDuration: 0.5, animations: {
+                button.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
                 button.alpha = 1
                 }, completion: {
                     _ in self.animateOut(actionToTake)
             })
         }
-    
     }
     
-    func makeRadialIcon(radialButton:RadialButton) -> UIView {
+    func makeRadialIcon(_ radialButton:RadialButton) -> UIView {
         let icon = UIView()
-        icon.frame = CGRectMake(0.0, 0.0, iconSize, iconSize)
-        icon.center = CGPointMake(self.frame.width / 2.0, self.frame.height / 2.0)
+        icon.frame = CGRect(x: 0.0, y: 0.0, width: iconSize, height: iconSize)
+        icon.center = CGPoint(x: self.frame.width / 2.0, y: self.frame.height / 2.0)
         icon.layer.cornerRadius = 30
-        icon.backgroundColor = UIColor.lightGrayColor()
+        icon.backgroundColor = UIColor.lightGray
         icon.layer.borderWidth = 1
         icon.alpha = 0
-        let label = UILabel(frame: CGRectMake(0, 0, iconSize, iconSize))
-        label.textAlignment = NSTextAlignment.Center
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: iconSize, height: iconSize))
+        label.textAlignment = NSTextAlignment.center
         switch (radialButton) {
         case .home:
             label.text = "h"
@@ -188,17 +187,17 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
             label.text = "3"
         case .touch:
             label.text = ""
-            icon.backgroundColor = UIColor.clearColor()
+            icon.backgroundColor = UIColor.clear
             icon.layer.borderWidth = 0.5
         }
         icon.addSubview(label)
         return icon
     }
     
-    func handleMenuSwipe(recognizer: UIPanGestureRecognizer) {
+    func handleMenuSwipe(_ recognizer: UIPanGestureRecognizer) {
         if MenuItemHasBeenSelected { return }
-        if recognizer.state == .Changed {
-            let point = recognizer.translationInView(self)
+        if recognizer.state == .changed {
+            let point = recognizer.translation(in: self)
             newCoordinates(point)
         }
     }
@@ -208,7 +207,7 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
 //MARK:- Enums
 
 public enum Direction : Int {
-    case None, Left, Up, Right, Down
+    case none, left, up, right, down
 }
 
 public enum RadialButton : Int {
@@ -216,5 +215,5 @@ public enum RadialButton : Int {
 }
 
 public enum Quadrant : Int {
-    case TopLeft, TopRight, Left, Right, BottomLeft, BottomRight
+    case topLeft, topRight, left, right, bottomLeft, bottomRight
 }

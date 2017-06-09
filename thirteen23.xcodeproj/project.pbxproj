@@ -93,6 +93,7 @@
 					CB746F481B72EC88001D1635 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = H4UQYGEL4C;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -234,6 +235,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tko-solutions.thirteen23";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -249,6 +251,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tko-solutions.thirteen23";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
