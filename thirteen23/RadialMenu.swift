@@ -61,22 +61,22 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
         self.addSubview(radialIconTwo)
         if haveAThirdButton { self.addSubview(radialIconThree) }
 
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions(), animations: {
             self.radialIconTouch.alpha = 1
             }, completion: nil)
        
-        UIView.animate(withDuration: 0.9, delay: 0.1, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.7, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.9, delay: 0.1, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.7, options: UIView.AnimationOptions(), animations: {
             self.radialIconOne.center = self.findIconCenterPoint(0,quadrant:quadrant)
             self.radialIconOne.alpha = self.transparency
             }, completion: nil)
         
-        UIView.animate(withDuration: 0.7, delay: 0.3, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.7, delay: 0.3, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIView.AnimationOptions(), animations: {
             self.radialIconTwo.center = self.findIconCenterPoint(1,quadrant:quadrant)
             self.radialIconTwo.alpha = self.transparency
             }, completion: nil)
         
         if haveAThirdButton {
-            UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.3, options: UIViewAnimationOptions(), animations: {
+            UIView.animate(withDuration: 0.5, delay: 0.5, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.3, options: UIView.AnimationOptions(), animations: {
                 self.radialIconThree.center = self.findIconCenterPoint(2,quadrant:quadrant)
                 self.radialIconThree.alpha = self.transparency
                 }, completion: nil)
@@ -116,20 +116,20 @@ class RadialMenuView: UIView, UIGestureRecognizerDelegate {
     func animateOut(_ actionToTake:RadialButton?) {
         // prevent the view controller from early dismissal if performing the HitTest animation
         if MenuItemHasBeenSelected && actionToTake == nil { return }
-        UIView.animate(withDuration: 0.5,  delay: 0.0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.5,  delay: 0.0, options: UIView.AnimationOptions(), animations: {
             self.radialIconOne.alpha = 0
            }, completion: nil)
         
-        UIView.animate(withDuration: 0.4,  delay: 0.1, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.4,  delay: 0.1, options: UIView.AnimationOptions(), animations: {
             self.radialIconTwo.alpha = 0
             self.radialIconTouch.backgroundColor = UIColor.gray
             }, completion: nil)
         
-        UIView.animate(withDuration: 0.3,  delay: 0.2, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.3,  delay: 0.2, options: UIView.AnimationOptions(), animations: {
             self.radialIconThree.alpha = 0
             }, completion: nil)
         
-        UIView.animate(withDuration: 0.3,  delay: 0.3, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.3,  delay: 0.3, options: UIView.AnimationOptions(), animations: {
             self.radialIconTouch.alpha = 0
             }, completion: {
                 _ in self.removeFromSuperview()

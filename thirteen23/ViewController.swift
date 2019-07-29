@@ -71,7 +71,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, RadialMenuD
         default: break
         }
         incomingView.alpha = 1.0
-        self.view.bringSubview(toFront: incomingView)
+        self.view.bringSubviewToFront(incomingView)
         UIView.animate(withDuration: 0.5, delay:0.0, options:[], animations: {
             incomingView.center = self.view!.center
             outgoingView.center = outgoingViewCenter
@@ -120,7 +120,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, RadialMenuD
     
     //MARK: - Gesture Recognizer
 
-    func handleLongPress(_ recognizer:UILongPressGestureRecognizer) {
+    @objc func handleLongPress(_ recognizer:UILongPressGestureRecognizer) {
         if recognizer.state == .began {
             // load up the radialMenu centered at this spot
             let pressLocation = recognizer.location(in: self.view)
@@ -139,7 +139,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, RadialMenuD
         }
     }
 
-    func handleSwipe(_ recognizer: UIPanGestureRecognizer) {
+    @objc func handleSwipe(_ recognizer: UIPanGestureRecognizer) {
         if let radialMenu = radialMenu {
             radialMenu.handleMenuSwipe(recognizer)
         }
